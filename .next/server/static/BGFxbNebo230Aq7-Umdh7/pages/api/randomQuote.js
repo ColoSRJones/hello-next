@@ -1,7 +1,7 @@
 module.exports =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
-/******/ 	var installedModules = {};
+/******/ 	var installedModules = require('../../../../ssr-module-cache.js');
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -88,23 +88,51 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "KqAr");
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "KqAr":
+/***/ "+FM6":
+/***/ (function(module) {
+
+module.exports = JSON.parse("[{\"quote\":\"Write tests, not too many, mostly integration\",\"author\":\"Guillermo Rauch\"},{\"quote\":\"The future is serverless\",\"author\":\"Guillermo Rauch\"},{\"quote\":\"Where there is a will, there is a way\",\"author\":\"Unknown\"},{\"quote\":\"You Learn More From Failure Than From Success. Don’t Let It Stop You. Failure Builds Character.\",\"author\":\"Unknown\"},{\"quote\":\"Every passing moment, we are nearing death and a new Javascript framework\",\"author\":\"Amandeep Singh\"}]");
+
+/***/ }),
+
+/***/ 1:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__("FQd+");
+
+
+/***/ }),
+
+/***/ "FQd+":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _quotes_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("+FM6");
+var _quotes_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t("+FM6", 1);
 
-    
+/* harmony default export */ __webpack_exports__["default"] = ((req, res) => {
+  const {
+    author
+  } = req.query;
+  let quotes = _quotes_json__WEBPACK_IMPORTED_MODULE_0__;
 
-    /* harmony default export */ __webpack_exports__["default"] = (function (ctx) {
-      return Promise.all([])
-    });
-  
+  if (author) {
+    quotes = quotes.filter(quote => quote.author.toLowerCase().includes(author.toLowerCase()));
+  }
+
+  if (!quotes.length) {
+    quotes = _quotes_json__WEBPACK_IMPORTED_MODULE_0__.filter(quote => quote.author.toLowerCase() === 'unknown');
+  }
+
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
+  res.status(200).json(quote);
+});
 
 /***/ })
 
